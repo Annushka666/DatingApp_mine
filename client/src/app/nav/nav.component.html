@@ -12,8 +12,11 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink='/messages'routerLinkActive='active' >Messages</a>
-                </li>
+                </li>                
             </ng-container>
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/errors'routerLinkActive='active' >Errors</a>
+            </li>
 
         </ul>
 
@@ -26,7 +29,8 @@
             </div>
         </div>
 
-        <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" 
+        <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" 
+                    class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" 
             autocomplete="off">
             <input 
                 name="username"
