@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { Pagination } from 'src/app/_models/pagination';
 import { UserParams } from 'src/app/_models/userParams';
 import { AccountService } from 'src/app/_services/account.service';
-import { User } from 'src/app/_models/user';
 import { take } from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
 
 @Component({
   selector: 'app-member-list',
@@ -16,11 +16,11 @@ import { take } from 'rxjs/operators';
 export class MemberListComponent implements OnInit {
   members: Member[];
   pagination: Pagination;
-  userParams:UserParams;
+  userParams: UserParams;
   user: User;
   genderList = [{ value: 'male', display: 'Males' }, { value: 'female', display: 'Females' }];
 
-  constructor(private memberService: MembersService) { 
+  constructor(private memberService: MembersService) {
     this.userParams = this.memberService.getUserParams();
   }
 
@@ -41,7 +41,7 @@ export class MemberListComponent implements OnInit {
     this.loadMembers();
   }
 
-  pageChanged(event: any){
+  pageChanged(event: any) {
     this.userParams.pageNumber = event.page;
     this.memberService.setUserParams(this.userParams);
     this.loadMembers();

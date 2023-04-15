@@ -6,7 +6,7 @@ import { AccountService } from '../_services/account.service';
 @Directive({
   selector: '[appHasRole]'
 })
-export class HasRoleDirective implements OnInit{
+export class HasRoleDirective implements OnInit {
   @Input() appHasRole: string[];
   user: User;
 
@@ -17,6 +17,7 @@ export class HasRoleDirective implements OnInit{
         this.user = user;
       })
      }
+
   ngOnInit(): void {
     // clear view if no roles
     if (!this.user?.roles || this.user == null) {
@@ -24,7 +25,7 @@ export class HasRoleDirective implements OnInit{
       return;
     }
 
-    if (this.user?.roles.some(r => this.appHasRole.includes(r))) {
+    if (this.user?.roles.some(r  => this.appHasRole.includes(r))) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainerRef.clear();

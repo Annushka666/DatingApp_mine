@@ -9,7 +9,7 @@ import { MembersService } from '../_services/members.service';
   styleUrls: ['./lists.component.css']
 })
 export class ListsComponent implements OnInit {
-  members: Partial<Member[]>
+  members: Partial<Member[]>;
   predicate = 'liked';
   pageNumber = 1;
   pageSize = 5;
@@ -20,9 +20,9 @@ export class ListsComponent implements OnInit {
   ngOnInit(): void {
     this.loadLikes();
   }
-
+  
   loadLikes() {
-    this.memberService.getLikes(this.predicate, this.pageNumber, this.pageSize).subscribe(response =>{
+    this.memberService.getLikes(this.predicate, this.pageNumber, this.pageSize).subscribe(response => {
       this.members = response.result;
       this.pagination = response.pagination;
     })
@@ -32,6 +32,5 @@ export class ListsComponent implements OnInit {
     this.pageNumber = event.page;
     this.loadLikes();
   }
-  
 
 }

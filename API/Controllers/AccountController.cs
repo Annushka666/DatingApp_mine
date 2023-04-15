@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -28,14 +26,15 @@ namespace API.Controllers
             _mapper = mapper;
             _tokenService = tokenService;
         }
+
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if(await UserExists(registerDto.Username)) return BadRequest("UserName is taken");
+            if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
 
-                user.UserName = registerDto.Username.ToLower();
+            user.UserName = registerDto.Username.ToLower();
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
@@ -57,10 +56,11 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user= await _userManager.Users
+            var user = await _userManager.Users
                 .Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
-            if(user == null) return Unauthorized("Invalid username");
+
+            if (user == null) return Unauthorized("Invalid username");
 
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, loginDto.Password, false);
@@ -76,10 +76,10 @@ namespace API.Controllers
                 Gender = user.Gender
             };
         }
-        
+
         private async Task<bool> UserExists(string username)
         {
-            return await _userManager.Users.AnyAsync(x=>x.UserName==username.ToLower());
+            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
     }
 }

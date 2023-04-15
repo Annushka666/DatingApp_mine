@@ -28,7 +28,7 @@ export class MessagesComponent implements OnInit {
       this.messages = response.result;
       this.pagination = response.pagination;
       this.loading = false;
-    }) 
+    })
   }
 
   deleteMessage(id: number) {
@@ -38,10 +38,8 @@ export class MessagesComponent implements OnInit {
   }
 
   pageChanged(event: any) {
-    if (this.pageNumber !== event.page) {
-      this.pageNumber = event.page;
-      this.loadMessages();
-    }
+    this.pageNumber = event.page;
+    this.loadMessages();
   }
 
 }

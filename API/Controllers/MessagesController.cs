@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
@@ -33,8 +31,8 @@ namespace API.Controllers
             var username = User.GetUsername();
 
             if (username == createMessageDto.RecipientUsername.ToLower())
-                return BadRequest("You cannot send messages to ypurself");
-            
+                return BadRequest("You cannot send messages to yourself");
+
             var sender = await _userRepository.GetUserByUserNameAsync(username);
             var recipient = await _userRepository.GetUserByUserNameAsync(createMessageDto.RecipientUsername);
 
@@ -51,9 +49,10 @@ namespace API.Controllers
 
             _messageRepository.AddMessage(message);
 
-            if (await _messageRepository.SaveAllAsync()) return Ok (_mapper.Map<MessageDto>(message));
+            if (await _messageRepository.SaveAllAsync()) return Ok(_mapper.Map<MessageDto>(message));
 
             return BadRequest("Failed to send message");
+
         }
 
         [HttpGet]
@@ -83,12 +82,12 @@ namespace API.Controllers
         {
             var username = User.GetUsername();
 
-            var message = await _messageRepository.getMessage(id);
+            var message = await _messageRepository.GetMessage(id);
 
             if (message.Sender.UserName != username && message.Recipient.UserName != username) 
                 return Unauthorized();
 
-            if(message.Sender.UserName == username) message.SenderDeleted = true;
+            if (message.Sender.UserName == username) message.SenderDeleted = true;
 
             if (message.Recipient.UserName == username) message.RecipientDeleted = true;
 
